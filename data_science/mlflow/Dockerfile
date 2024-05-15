@@ -6,7 +6,9 @@ WORKDIR /app
 
 # Install any needed packages specified in requirements.txt
 COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r requirements.txt
+RUN apt update && apt install -y python3-pip && \
+    pip3 install --no-cache-dir -r requirements.txt
+
 
 # Copy the rest of your app's source code from your host to your image filesystem.
 COPY . /app
