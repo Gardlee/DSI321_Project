@@ -5,8 +5,8 @@ FROM continuumio/miniconda3
 WORKDIR /app
 
 # Install any needed packages specified in requirements.txt
-COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
 
 # Copy the rest of your app's source code from your host to your image filesystem.
 COPY . /app
