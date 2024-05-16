@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Install any needed packages specified in requirements.txt
 COPY requirements.txt /app/
-RUN conda install --yes --file requirements.txt psycopg2-binary
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of your app's source code from your host to your image filesystem.
 COPY . /app
@@ -24,4 +24,3 @@ ENV MLFLOW_ARTIFACT_ROOT=/mlflow
 
 # Run mlflow server when the container launches
 CMD ["mlflow", "server", "--backend-store-uri", "${MLFLOW_BACKEND_URI}", "--default-artifact-root", "${MLFLOW_ARTIFACT_ROOT}", "--host", "0.0.0.0", "--port", "5000"]
-"--port", "5000"]
