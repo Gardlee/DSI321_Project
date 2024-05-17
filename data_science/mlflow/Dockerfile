@@ -4,16 +4,19 @@ FROM continuumio/miniconda3
 # Set the working directory
 WORKDIR /app
 
+# Copy only the requirements file to avoid unnecessary cache invalidations
+COPY requirements.txt .
+
 # Install any needed packages specified in requirements.txt
-COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of your app's source code from your host to your image filesystem.
-COPY . /app
+COPY . .
 
-# Ensure all directories are writable
-RUN chmod -R 777 /app
-RUN mkdir -p /mlflow && chmod -R 777 /mlflow
+# Ensure all directories are writable by any user
+RUN chmod -R 777 /app \
+    && mkdir -p /mlflow \
+    && chmod -R 777 /mlflow
 
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
