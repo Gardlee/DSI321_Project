@@ -4,8 +4,11 @@ FROM continuumio/miniconda3
 # Set the working directory
 WORKDIR /app
 
-# Install MLflow
-RUN pip install mlflow
+# Copy only the requirements file to avoid unnecessary cache invalidations
+COPY requirements.txt .
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir --upgrade pip setuptools
 
 # Copy the rest of your app's source code from your host to your image filesystem.
 COPY . .
