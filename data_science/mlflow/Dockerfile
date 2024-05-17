@@ -28,5 +28,8 @@ EXPOSE 5000
 ENV MLFLOW_BACKEND_URI=postgresql+psycopg2://user:password@postgres:5432/datascience
 ENV MLFLOW_ARTIFACT_ROOT=/mlflow
 
+# Define the full path to the MLflow executable
+ENV PATH="/opt/conda/bin:${PATH}"
+
 # Run mlflow server when the container launches
 CMD ["mlflow", "server", "--backend-store-uri", "${MLFLOW_BACKEND_URI}", "--default-artifact-root", "${MLFLOW_ARTIFACT_ROOT}", "--host", "0.0.0.0", "--port", "5000"]
