@@ -4,9 +4,6 @@ FROM continuumio/miniconda3
 # Set the working directory
 WORKDIR /app
 
-# Install MLflow
-RUN pip install mlflow
-
 # Copy only the requirements file to avoid unnecessary cache invalidations
 COPY requirements.txt .
 
@@ -27,9 +24,6 @@ EXPOSE 5000
 # Define environment variables
 ENV MLFLOW_BACKEND_URI=postgresql+psycopg2://user:password@postgres:5432/datascience
 ENV MLFLOW_ARTIFACT_ROOT=/mlflow
-
-# Define the full path to the MLflow executable
-ENV PATH="/opt/conda/bin:${PATH}"
 
 # Run mlflow server when the container launches
 CMD ["mlflow", "server", "--backend-store-uri", "${MLFLOW_BACKEND_URI}", "--default-artifact-root", "${MLFLOW_ARTIFACT_ROOT}", "--host", "0.0.0.0", "--port", "5000"]
