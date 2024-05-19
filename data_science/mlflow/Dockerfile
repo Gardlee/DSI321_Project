@@ -7,8 +7,10 @@ WORKDIR /app
 # Copy only the requirements file to avoid unnecessary cache invalidations
 COPY requirements.txt .
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir --upgrade pip setuptools
+# Install MLflow and any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir --upgrade pip setuptools \
+    && pip install --no-cache-dir mlflow \
+    && pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of your app's source code from your host to your image filesystem.
 COPY . .
