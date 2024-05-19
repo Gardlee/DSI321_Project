@@ -8,7 +8,9 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir --upgrade pip setuptools
+RUN pip install --no-cache-dir --upgrade pip setuptools \
+    && pip install --no-cache-dir -r requirements.txt \
+    && pip install --no-cache-dir mlflow
 
 # Copy the rest of your app's source code from your host to your image filesystem.
 COPY . .
@@ -26,4 +28,5 @@ ENV MLFLOW_BACKEND_URI=postgresql+psycopg2://user:password@postgres:5432/datasci
 ENV MLFLOW_ARTIFACT_ROOT=/mlflow
 
 # Run mlflow server when the container launches
-CMD ["mlflow", "server", "--backend-store-uri", "${MLFLOW_BACKEND_URI}", "--default-artifact-root", "${MLFLOW_ARTIFACT_ROOT}", "--host", "0.0.0.0", "--port", "5000"]
+CMD ["/opt/conda/bin/mlflow", "server", "--backend-store-uri", "${MLFLOW_BACKEND_URI}", "--default-artifact-root", "${MLFLOW_ARTIFACT_ROOT}", "--host", "0.0.0.0", "--port", "5000"]
+
