@@ -1,4 +1,4 @@
-# Use an # Use an official Miniconda image as a parent image
+# Use an official Miniconda image as a parent image
 FROM continuumio/miniconda3
 
 # Set the working directory
@@ -8,11 +8,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir --upgrade pip setuptools \
-    && pip install --no-cache-dir -r requirements.txt
-
-# Install mlflow separately
-RUN pip install --no-cache-dir mlflow
+RUN pip install --no-cache-dir --upgrade pip setuptools
 
 # Copy the rest of your app's source code from your host to your image filesystem.
 COPY . .
