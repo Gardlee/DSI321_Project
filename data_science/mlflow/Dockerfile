@@ -7,10 +7,8 @@ WORKDIR /app
 # Copy only the requirements file to avoid unnecessary cache invalidations
 COPY requirements.txt .
 
-# Install pip and setuptools
-RUN pip install --no-cache-dir --upgrade pip setuptools \
-    && pip install --no-cache-dir mlflow -v \
-    && pip install --no-cache-dir -r requirements.txt -v
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir --upgrade pip setuptools
 
 # Copy the rest of your app's source code from your host to your image filesystem.
 COPY . .
@@ -29,4 +27,3 @@ ENV MLFLOW_ARTIFACT_ROOT=/mlflow
 
 # Run mlflow server when the container launches
 CMD ["mlflow", "server", "--backend-store-uri", "${MLFLOW_BACKEND_URI}", "--default-artifact-root", "${MLFLOW_ARTIFACT_ROOT}", "--host", "0.0.0.0", "--port", "5000"]
- "--port", "5000"]
